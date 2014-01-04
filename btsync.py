@@ -170,7 +170,3 @@ class BTSync(object):
             return json.load(resp)
         else:
             return None
-
-if __name__ == '__main__':
-    btsync = BTSync()
-    print btsync.get_secrets('ahalfsiosn2fptp6bbmzd2pdmqkzotyqu')
