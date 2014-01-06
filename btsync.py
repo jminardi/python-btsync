@@ -29,6 +29,10 @@ class BTSync(object):
         pswd : str
             optional password to use if btsync api is protected.
 
+        Notes
+        -----
+        The host, port, user, and pswd must match the config.json file.
+
         """
         self.conn = httplib.HTTPConnection('{}:{}'.format(host, port))
         auth = 'Basic ' + base64.b64encode('{}:{}'.format(user, pswd))
