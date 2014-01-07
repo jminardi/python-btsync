@@ -76,4 +76,6 @@ See `config.json` for a sample config file.
 
 Then quit BTSync if it is running, and start it from the command line with the --config flag:
 
-`/Applications/BitTorrent\ Sync.app/Contents/MacOS/BitTorrent\ Sync --config path/to/config.json`
+```bash
+$ /Applications/BitTorrent\ Sync.app/Contents/MacOS/BitTorrent\ Sync --config path/to/config.json
+```
