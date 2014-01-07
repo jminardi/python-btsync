@@ -1,9 +1,11 @@
 python-btsync
 =============
 
-The BTSync class found in `btsync.py` is a light wrapper around the Bittorrent Sync API.
+The `BTSync` class is a light wrapper around the [Bittorrent Sync API][1].
 For now, this code assumes a btsync instance is running with a working API key.
-(see the **Notes** section for more info on how to get this set up.)
+(See the **Notes** section for more info on how to get this set up.)
+
+[1]: http://www.bittorrent.com/sync/developers/api
 
 Installation
 ------------
