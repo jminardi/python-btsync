@@ -35,7 +35,12 @@ Basic Use
 
 Implemented Methods
 -------------------
-At this time, not all API calls are implemented.
+At this time, not all API calls are implemented. However, you can still 
+make any API call manually using the `request()` method like so:
+
+```python
+btsync.request({'method': 'get_folder_peers', 'secret': '<yoursecret>'})
+```
 
 * [x] Get folders
 * [x] Add folder
