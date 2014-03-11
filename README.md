@@ -1,20 +1,22 @@
 python-btsync
 =============
 
-The BTSync class found in btsync.py is a light wrapper around the Bittorrent Sync API.
+The `BTSync` class is a light wrapper around the [Bittorrent Sync API][1].
 For now, this code assumes a btsync instance is running with a working API key.
-(see the **Notes** section for more info on how to get this set up.)
+(See the **Notes** section for more info on how to get this set up.)
+
+[1]: http://www.bittorrent.com/sync/developers/api
 
 Installation
 ------------
-_If you haven't already, you need to 
-[download the Bittorrent Sync Application](http://www.bittorrent.com/sync/downloads)_
-
 ```bash
 $ git clone https://github.com/jminardi/python-btsync.git
 $ cd python-btsync
 $ python setup.py install
 ```
+_You will also need a recent version of the [Bittorrent Sync Application][0]_
+[0]: http://www.bittorrent.com/sync/downloads
+
 
 Basic Use
 ---------
@@ -33,6 +35,34 @@ Basic Use
   u'type': u'read_write'}]
 ```
 
+Implemented Methods
+-------------------
+At this time, not all API calls are implemented. However, you can still 
+make any API call manually using the `request()` method like so:
+
+```python
+btsync.request({'method': 'get_folder_peers', 'secret': '<yoursecret>'})
+```
+
+* [x] Get folders
+* [x] Add folder
+* [x] Remove folder
+* [x] Get files
+* [ ] Set file preferences
+* [ ] Get folder peers
+* [x] Get secrets
+* [ ] Get folder preferences
+* [ ] Set folder preferences
+* [ ] Get folder hosts
+* [ ] Set folder hosts
+* [ ] Get preferences
+* [ ] Set preferences
+* [ ] Get OS name
+* [ ] Get version
+* [ ] Get speed
+* [ ] Shutdown
+
+
 Notes
 -----
 
@@ -46,4 +76,6 @@ See `config.json` for a sample config file.
 
 Then quit BTSync if it is running, and start it from the command line with the --config flag:
 
-`/Applications/BitTorrent\ Sync.app/Contents/MacOS/BitTorrent\ Sync --config path/to/config.json`
+```bash
+$ /Applications/BitTorrent\ Sync.app/Contents/MacOS/BitTorrent\ Sync --config path/to/config.json
+```

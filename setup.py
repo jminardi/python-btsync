@@ -12,4 +12,5 @@ setup(
     zip_safe=False,
     maintainer='Jack Minardi',
     maintainer_email='jack@minardi.org',
+    py_modules=['btsync'],
 )
