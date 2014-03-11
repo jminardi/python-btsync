@@ -2,6 +2,12 @@ import httplib
 import base64
 import urllib
 import json
+import os
+import socket
+import tempfile
+
+# Default path to BTSync executable. Can be overwritten in the init method.
+BTSYNC_PATH = r'/Applications/BitTorrent\ Sync.app/Contents/MacOS/BitTorrent\ Sync'  #noqa
 
 
 class BTSync(object):
@@ -15,7 +21,7 @@ class BTSync(object):
 
     """
 
-    def __init__(self, host='localhost', port='8888',
+    def __init__(self, btsync_path=BTSYNC_PATH, host='127.0.0.1', port='8888',
                  user='admin', pswd='password'):
         """
         Parameters
@@ -28,15 +34,26 @@ class BTSync(object):
             optional username to use if btsync api is protected.
         pswd : str
             optional password to use if btsync api is protected.
-
-        Notes
-        -----
-        The host, port, user, and pswd must match the config.json file.
+        btsync_path : path
+            Path to BTSync executable.
 
         """
+        self.btsync_path = btsync_path
         self.conn = httplib.HTTPConnection('{}:{}'.format(host, port))
         auth = 'Basic ' + base64.b64encode('{}:{}'.format(user, pswd))
         self.headers = {'Authorization': auth}
+
+        self.config = {
+            'use_gui': True,
+            'webui': {
+                'listen': '{}:{}'.format(host, port),
+                'login': user,
+                'password': pswd,
+                'api_key': ('2WCXYTARBRSSCL3PMT2NKIMJVBFRXPU72PIVCJ73UHMVILX73'
+                            'UGM5RVLF45ETLCEDFBGEH4P6ACYPCSSNXPQY2LP6BB6YPPVJH'
+                            'VGQDZ3KDVNOQT2IBB5ZKM6XZ4CXA3DUMO3KBY')
+            }
+        }
 
     def get_folders(self, secret=None):
         """
@@ -75,7 +92,7 @@ class BTSync(object):
 
         { "error": 0 }
 
-        http://[address]:[port]/api?method=add_folder&dir=(folderPath)[&secret=(secret)&selective_sync=1]
+        http://[address]:[port]/api?method=add_folder&dir=(folderPath)[&secret=(secret)&selective_sync=1]  #noqa
 
         dir (required) - specify path to the sync folder
         secret (optional) - specify folder secret
@@ -127,7 +144,7 @@ class BTSync(object):
             }
         ]
 
-        http://[address]:[port]/api?method=get_files&secret=(secret)[&path=(path)]
+        http://[address]:[port]/api?method=get_files&secret=(secret)[&path=(path)]  #noqa
 
         secret (required) - must specify folder secret
         path (optional) - specify path to a subfolder of the sync folder.
@@ -155,7 +172,7 @@ class BTSync(object):
             "encryption": "G3PNU7KTYM63VNQZFPP3Q3GAMTPRWDEZ"
         }
 
-        http://[address]:[port]/api?method=get_secrets[&secret=(secret)&type=encryption]
+        http://[address]:[port]/api?method=get_secrets[&secret=(secret)&type=encryption]  #noqa
 
         secret (required) - must specify folder secret
         type (optional) - if type=encrypted, generate secret with support of
@@ -166,9 +183,23 @@ class BTSync(object):
             params['secret'] = secret
         return self._request(params)
 
+    def start(self):
+        """ Start the btsync instance if there isn't already one running,
+        otherwise do nothing.
+        """
+        if self.get_secrets() is None:
+            config_file = tempfile.NamedTemporaryFile(delete=False)
+            config_file.write(json.dumps(self.config))
+            config_file.close()
+            os.system('{} --config {}&'.format(self.btsync_path,
+                                               config_file.name))
+
     def _request(self, params):
         params = urllib.urlencode(params)
-        self.conn.request('GET', '/api?' + params, '', self.headers)
+        try:
+            self.conn.request('GET', '/api?' + params, '', self.headers)
+        except (socket.error, httplib.CannotSendRequest) as err:
+            return None
         resp = self.conn.getresponse()
         if resp.status == 200:
             return json.load(resp)
