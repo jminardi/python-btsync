@@ -198,7 +198,7 @@ class BTSync(object):
         params = urllib.urlencode(params)
         try:
             self.conn.request('GET', '/api?' + params, '', self.headers)
-        except (socket.error, httplib.CannotSendRequest) as err:
+        except (socket.error, httplib.CannotSendRequest):
             return None
         resp = self.conn.getresponse()
         if resp.status == 200:
