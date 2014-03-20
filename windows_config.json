@@ -1,0 +1,20 @@
+{
+    // path to folder where Sync will store its internal data,
+    // folder must exist on disk
+    "storage_path" : "./",
+
+  "use_gui" : true,
+  "webui" :
+  {
+
+
+    "listen" : "127.0.0.1:8888",
+        // login and password for HTTP basic authentication
+        // authentication is optional, but it's recommended to use some
+        // secret values unique for each Sync installation
+        "login" : "admin",
+        "password" : "password",
+    "api_key" : "enter api key"
+  }
+}
+
