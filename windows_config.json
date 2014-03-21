@@ -14,7 +14,9 @@
         // secret values unique for each Sync installation
         "login" : "admin",
         "password" : "password",
-    "api_key" : "enter api key"
+        'api_key': ('2WCXYTARBRSSCL3PMT2NKIMJVBFRXPU72PIVCJ73UHMVILX73'
+                        'UGM5RVLF45ETLCEDFBGEH4P6ACYPCSSNXPQY2LP6BB6YPPVJH'
+                        'VGQDZ3KDVNOQT2IBB5ZKM6XZ4CXA3DUMO3KBY')
   }
 }
 
