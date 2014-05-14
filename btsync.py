@@ -149,7 +149,7 @@ class BTSync(object):
         secret (required) - must specify folder secret
         path (optional) - specify path to a subfolder of the sync folder.
         """
-        params = {'method': 'get_files'}
+        params = {'method': 'get_files', 'secret': secret}
         if path is not None:
             params['path'] = path
         return self._request(params)
@@ -196,12 +196,9 @@ class BTSync(object):
 
     def _request(self, params):
         params = urllib.urlencode(params)
-        try:
-            self.conn.request('GET', '/api?' + params, '', self.headers)
-        except (socket.error, httplib.CannotSendRequest):
-            return None
+        self.conn.request('GET', '/api?' + params, '', self.headers)
         resp = self.conn.getresponse()
         if resp.status == 200:
             return json.load(resp)
         else:
-            return None
+            raise RuntimeError('{}: {}'.format(resp.status, resp.reason))
