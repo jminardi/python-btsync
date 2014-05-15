@@ -3,7 +3,6 @@ import base64
 import urllib
 import json
 import os
-import socket
 import tempfile
 
 # Default path to BTSync executable. Can be overwritten in the init method.
