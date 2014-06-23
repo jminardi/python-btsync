@@ -9,6 +9,23 @@ For now, this code assumes a btsync instance is running with a working API key.
 
 Installation
 ------------
+
+Installation under windows:
+Installation of BTSync under windows is a bit finnicky and without error messages, so this simplifies it.
+
+Install BTSync in a regular directory , not something like "Program files" which needs admin access. 
+Exit from BTSync if it's running 
+Go to the BTSync directory , delete everything except BTSync.exe
+Edit the api key in windows_config.json
+Run BTSync.exe /config path_to_windows_config_json
+If all goes well BTSync will launch.
+
+After cloning pyhon-btsync:
+Set line 10 in python-btsync./btsync.py with the executable directory
+
+If you want to change admin/password/port , you'll have to repeat this process after changing admin/password/port both in windows_config.json and in python_btsync/btsync.py 
+
+
 ```bash
 $ git clone https://github.com/jminardi/python-btsync.git
 $ cd python-btsync
