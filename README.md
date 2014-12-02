@@ -86,7 +86,7 @@ Notes
 To use the API you will need to apply for a key. You can find out
 how to do that, and learn more about the btsync API here:
 
-<http://www.bittorrent.com/sync/developers/>
+<http://www.getsync.com/api>
         
 Once you receive your key, you need to enter it into the config file.
 See `config.json` for a sample config file.
